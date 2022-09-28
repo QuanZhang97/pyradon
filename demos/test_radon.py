@@ -2,18 +2,19 @@
 # -*- coding: utf-8 -*-
 #import io
 import numpy as np
+import pyradon as pr
 #import scipy
-import radon_op
+# import radon_op
 import matplotlib.pyplot as plt
-import pcg
+# import pcg
 # 
 # REFERENCE
 # Chen, 2018, GEO, Automatic velocity analysis using high-resolution hyperbolic Radon transform
 # Zhang, 2022, GJI, Improving receiver function with high-resolution Radon transform
 
 
-d = np.loadtxt('test_z_data.txt')
-h = np.loadtxt('test_dist_data.txt')
+d = np.loadtxt('./data/test_z_data.txt')
+h = np.loadtxt('./data/test_dist_data.txt')
 
 nh = len(h)
 dq = 0.005
@@ -42,11 +43,14 @@ N1 = 10  # CG Iterations (Internal loop);
 N2 = 1   # Update of weights for the sparse solution: N1 = 1 LS;  N2 > 3 for High Res (Sparse) solution
 
 
-m = radon_op.radon(d,Param,-1)
+## Adjoint
+m = pr.radon(d,Param,-1)
+print("Adjoint is done\n")
+## Inversion
+mi,misfit = pr.pcg(radon_op.radon,Param,d,np.zeros(ma.shape),niter_in=N1,niter_out=N2,verb=1)
+print("Inversion is done\n")
 
-#mi,misfit = pcg(@radon_op,Param,d,np.zeros(np.size(ma,0),np.size(ma,1)),N1,N2,1)
-mi,misfit = pcg.pcg(radon_op.radon,Param,d,np.zeros(ma.shape),niter_in=N1,niter_out=N2,verb=1)
-di = radon_op.radon(mi,Param,1)
+di = pr.radon(mi,Param,1)
 
 plt.figure(figsize=(14,16)) # Plot original data with Radon spectrum (d,m)
 plt.subplot(1,2,1)
