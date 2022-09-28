@@ -72,3 +72,9 @@ Each figure in the gallery directory corresponds to a DEMO script in the "demo" 
     Quan Zhang
     quanzhang1997@gmail.com
 
+-----------
+## Examples
+
+A simple example of the adjoint Radon transform
+
+<img src='./test.png' alt='Adj' width=960/>
