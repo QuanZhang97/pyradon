@@ -47,7 +47,7 @@ N2 = 1   # Update of weights for the sparse solution: N1 = 1 LS;  N2 > 3 for Hig
 m = pr.radon(d,Param,-1)
 print("Adjoint is done\n")
 ## Inversion
-mi,misfit = pr.pcg(radon_op.radon,Param,d,np.zeros(ma.shape),niter_in=N1,niter_out=N2,verb=1)
+mi,misfit = pr.pcg(pr.radon,Param,d,np.zeros(ma.shape),niter_in=N1,niter_out=N2,verb=1)
 print("Inversion is done\n")
 
 di = pr.radon(mi,Param,1)
