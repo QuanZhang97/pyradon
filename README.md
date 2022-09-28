@@ -78,3 +78,7 @@ Each figure in the gallery directory corresponds to a DEMO script in the "demo" 
 A simple example of the adjoint Radon transform
 
 <img src='./test.png' alt='Adj' width=960/>
+	Figure 1. Original Z component data with its Radon spectrum.
+
+<img src='./test_i.png' alt='Adj' width=960/>
+	Figure 2. HRT denoised Z component data with its Radon spectrum.
