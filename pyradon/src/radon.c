@@ -255,7 +255,6 @@ void radon_pcg(operator oper,
 	consvec(1,nx,P);				// P=ones(size(z));	
 			
 	kc=1;						// kc=1;
-	misfit = (float*)malloc(itmax_internal*itmax_external * sizeof(float));// Misfit=[];
 	scale(z,x,nx,1);						// x=z;
 	
 	for(l=1;l<=itmax_external;l++)
@@ -390,6 +389,8 @@ static PyObject *radonc_inv(PyObject *self, PyObject *args){
         h0[i]=*((float*)PyArray_GETPTR1(arrf4,i));
     }
     
+	misfit = (float*)malloc(niter_in*niter_out * sizeof(float));/*why in python-C env this needs to be before the pcg?*/
+	
 	radon_init(nt0, nh0, nv0, dt0, v0, h0, typ);
 	
 
@@ -408,6 +409,7 @@ static PyObject *radonc_inv(PyObject *self, PyObject *args){
 	else
 		(*((float*)PyArray_GETPTR1(vecout,i))) = misfit[i-nmod];
 
+	
 	return PyArray_Return(vecout);
 	
 }
