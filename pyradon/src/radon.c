@@ -547,7 +547,7 @@ static PyObject *radonc_fb(PyObject *self, PyObject *args){
 }
 
 // documentation for each functions.
-static char radoncfun_document[] = "Document stuff for eikonal...";
+static char radoncfun_document[] = "Document stuff for radon...";
 
 // defining our functions like below:
 // function_name, function, METH_VARARGS flag, function documents
@@ -569,8 +569,6 @@ static struct PyModuleDef radoncfunModule = {
 
 // runs while initializing and calls module creation function.
 PyMODINIT_FUNC PyInit_radoncfun(void){
-
-//   return PyModule_Create(&eikonalModule);
   
     PyObject *module = PyModule_Create(&radoncfunModule);
     import_array();

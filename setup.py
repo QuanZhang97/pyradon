@@ -20,7 +20,7 @@ def read(*names, **kwargs):
 
 from distutils.core import Extension
 
-eikonalc_module = Extension('radoncfun', sources=['pyradon/src/radon.c'])
+radonc_module = Extension('radoncfun', sources=['pyradon/src/radon.c'])
 
 from numpy.distutils.core import setup 
 setup(
@@ -32,7 +32,7 @@ setup(
     author="pyradon developing team",
     author_email="quanzhang1997@gmail.com",
     url="https://github.com/QuanZhang97/pyradon",
-    ext_modules=[eikonalc_module],
+    ext_modules=[radonc_module],
     packages=['pyradon'],
     include_package_data=True,
     zip_safe=False,
