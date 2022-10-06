@@ -65,29 +65,9 @@ m=scipy.signal.convolve2d(m,w,'same');
 
 par={'h':h,'v':1/(p+0.0000000000000001),'nt':nt,'dt':dt,'typ':1}
 
-#Forward operator
-
-
-
-
 ## Python version
-# tic = time.perf_counter()
 d=pr.radon(m,par,1);
-# #Adjoint operator
-# ma = pr.radon(d,par,-1);
-# toc = time.perf_counter()
-# print(f"Python version takes {toc - tic:0.4f} seconds");
-# 
-# plt.figure(figsize=(8, 8));
-# plt.subplot(1,3,1)
-# plt.imshow(m,aspect='auto');
-# plt.subplot(1,3,2)
-# plt.imshow(d,aspect='auto');
-# plt.subplot(1,3,3)
-# plt.imshow(ma,aspect='auto');
-# plt.show()
-# 
-# 
+
 # ## C version
 tic = time.perf_counter()
 ### C-version
@@ -97,53 +77,18 @@ d_c=pr.radonc(m,par,1);
 ma_c = pr.radonc(d_c,par,-1);
 toc = time.perf_counter()
 print(f"C version takes {toc - tic:0.4f} seconds");
-# 
-# plt.figure(figsize=(8, 8));
-# plt.subplot(1,3,1)
-# plt.imshow(m,aspect='auto');
-# plt.subplot(1,3,2)
-# plt.imshow(d_c,aspect='auto');
-# plt.subplot(1,3,3)
-# plt.imshow(ma_c,aspect='auto');
-# plt.show()
-# 
-# ## Comparison
-# plt.figure(figsize=(8, 8));
-# plt.imshow(np.concatenate((ma,ma_c,ma-ma_c),axis=1),aspect='auto');
-# plt.show()
-# 
 
 ## LS
-# tic = time.perf_counter()
-# mi=pr.radon_l2(par,d,np.zeros(m.shape),niter=10,verb=1)
-# toc = time.perf_counter()
-# print(f"Python version LS takes {toc - tic:0.4f} seconds");
-
 tic = time.perf_counter()
 mi_c=pr.radon_l2c(par,d,np.zeros(m.shape),niter=10,verb=1)[0]
 toc = time.perf_counter()
 print(f"C version LS takes {toc - tic:0.4f} seconds");
 
-# plt.figure(figsize=(8, 8));
-# plt.imshow(np.concatenate((mi,mi_c,mi-mi_c),axis=1),aspect='auto');
-# plt.show()
-
-
 ## High-resolution 
-# tic = time.perf_counter()
-# ml1=pr.radon_l1(par,d,np.zeros(m.shape),niter_in=10,niter_out=3,verb=1)
-# toc = time.perf_counter()
-# print(f"Python version L1 takes {toc - tic:0.4f} seconds");
-# 
 tic = time.perf_counter()
 ml1_c=pr.radon_l1c(par,d,np.zeros(m.shape),niter_in=10,niter_out=3,verb=1)[0]
 toc = time.perf_counter()
 print(f"C version L1 takes {toc - tic:0.4f} seconds");
-# 
-# plt.figure(figsize=(8, 8));
-# plt.imshow(np.concatenate((ml1,ml1_c,ml1-ml1_c),axis=1),aspect='auto');
-# plt.show()
-
 
 plt.figure(figsize=(8, 8));
 plt.subplot(1,5,1)

@@ -106,7 +106,7 @@ print(f"C version takes {toc - tic:0.4f} seconds");
 ## Comparison
 plt.figure(figsize=(8, 8));
 plt.imshow(np.concatenate((ma,ma_c,ma-ma_c),axis=1),aspect='auto');
-plt.show()
+# plt.show()
 
 
 ## LS
@@ -122,7 +122,7 @@ print(f"C version LS takes {toc - tic:0.4f} seconds");
 
 plt.figure(figsize=(8, 8));
 plt.imshow(np.concatenate((mi,mi_c,mi-mi_c),axis=1),aspect='auto');
-plt.show()
+# plt.show()
 
 ## High-resolution 
 tic = time.perf_counter()
@@ -137,7 +137,7 @@ print(f"C version L1 takes {toc - tic:0.4f} seconds");
 
 plt.figure(figsize=(8, 8));
 plt.imshow(np.concatenate((ml1,ml1_c,ml1-ml1_c),axis=1),aspect='auto');
-plt.show()
+# plt.show()
 
 
 plt.figure(figsize=(8, 8));

@@ -22,7 +22,7 @@ def radon_l1(par,d,m0,niter_in=10,niter_out=3,verb=0):
 	
 	Written on Oct, 5, 2022
 	'''
-	mi,misfit=pcg(radon,par,d,m0,niter_in=niter,niter_out=3,verb=verb);
+	mi,misfit=pcg(radon,par,d,m0,niter_in=niter_in,niter_out=3,verb=verb);
 
 	return mi,misfit
 	
@@ -33,7 +33,6 @@ def radon_l2c(par,d,m0,niter=10,verb=0):
 	
 	Written on Oct, 5, 2022
 	'''
-# 	mi,misfit=pcg(radon,par,d,m0,niter_in=niter,niter_out=1,verb=verb);
 	
 	h = par['h'];
 	v = par['v'];
@@ -62,7 +61,6 @@ def radon_l1c(par,d,m0,niter_in=10,niter_out=3,verb=0):
 	
 	Written on Oct, 5, 2022
 	'''
-# 	mi,misfit=pcg(radon,par,d,m0,niter_in=niter,niter_out=1,verb=verb);
 	
 	h = par['h'];
 	v = par['v'];
