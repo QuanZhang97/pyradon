@@ -147,44 +147,6 @@ void radon_init(int Nt, int Nh, int Nv, float Dt, float *V, float *H, int typ)
 	}
 }
 
-void radon1(bool adj, bool add, int nx, int ny, float *x, float *y)
-/*< General radon operator >*/
-{   
-	int itau,ih,iv,it;
-	float tau,h_v,t;
-	
-	adjnull(adj,add,nx,ny,x,y);
-	
-	for(itau=0;itau<nt;itau++)
-		for(ih=0;ih<nh;ih++)
-			for (iv=0;iv<nv;iv++)
-			{
-				if(type==1) /*Linear*/
-				{	
-				t = itau*dt + h[ih]/v[iv];
-				}
-				if(type==2) /*Parabolic*/
-				{
-				t = itau*dt + h[ih]*h[ih]*v[iv]/hmax/hmax;
-				}
-				if(type==3) /*Hyperbolic*/
-				{
-				tau=itau*dt;
-				h_v=h[ih]/v[iv];
-				t=sqrtf(tau*tau+h_v*h_v);
-				}	
-				it=floorf(t/dt)+1;
-				if(it<=nt)
-				{
-					if (adj)
-					x[iv*nt+itau]+=y[ih*nt+it];
-					else
-					y[ih*nt+it]+=x[iv*nt+itau]; 
-				}	
-			}			
-
-}
-
 void radon(bool adj, bool add, int nx, int ny, float *x, float *y)
 /*< General radon operator >*/
 {   
@@ -341,8 +303,6 @@ static PyObject *radonc_inv(PyObject *self, PyObject *args){
 	dt0=f11;
 	verb=f12;
 	
-	// printf("type=%d,niter_in=%d,niter_out=%d,nt0=%d,nv0=%d,nh0=%d,dt0=%f,verb=%d\n",typ,niter_in,niter_out,nt0,nv0,nh0,dt0,verb);
-	
     arrf1 = PyArray_FROM_OTF(f1, NPY_FLOAT, NPY_IN_ARRAY);
     arrf2 = PyArray_FROM_OTF(f2, NPY_FLOAT, NPY_IN_ARRAY);
     arrf3 = PyArray_FROM_OTF(f3, NPY_FLOAT, NPY_IN_ARRAY);
@@ -393,7 +353,6 @@ static PyObject *radonc_inv(PyObject *self, PyObject *args){
 	
 	radon_init(nt0, nh0, nv0, dt0, v0, h0, typ);
 	
-
 	radon_pcg(radon, data, model, niter_in, niter_out, verb, misfit);	
 	
     /*Below is the output part*/
@@ -450,8 +409,6 @@ static PyObject *radonc_fb(PyObject *self, PyObject *args){
 	forw=f9; /*forw=1: forward, else: backward/adjoint*/
 	verb=f10;
 	
-	// printf("type=%d,nt0=%d,nv0=%d,nh0=%d,dt0=%f,operator=%d,verb=%d\n",typ,nt0,nv0,nh0,dt0,forw,verb);
-	
     arrf1 = PyArray_FROM_OTF(f1, NPY_FLOAT, NPY_IN_ARRAY);
     arrf2 = PyArray_FROM_OTF(f2, NPY_FLOAT, NPY_IN_ARRAY);
     arrf3 = PyArray_FROM_OTF(f3, NPY_FLOAT, NPY_IN_ARRAY);
@@ -469,14 +426,8 @@ static PyObject *radonc_fb(PyObject *self, PyObject *args){
 	v0 = (float*)malloc(nv0 * sizeof(float));
 	h0 = (float*)malloc(nh0 * sizeof(float));
 	
-//     if (*sp != ndata)
-//     {
-//     	printf("Dimension mismatch, N_input = %d, N_data = %d\n", *sp, ndata);
-//     	return NULL;
-//     }
     
     /*reading data*/
-    
     if(forw==-1)
     {
     	for (i=0; i<ndata; i++)
