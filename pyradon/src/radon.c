@@ -406,8 +406,8 @@ static PyObject *radonc_inv(PyObject *self, PyObject *args){
 	if(i<nmod)
 		(*((float*)PyArray_GETPTR1(vecout,i))) = model[i];
 	else
-		(*((float*)PyArray_GETPTR1(vecout,i))) = misfit[i];
-	
+		(*((float*)PyArray_GETPTR1(vecout,i))) = misfit[i-nmod];
+
 	return PyArray_Return(vecout);
 	
 }
