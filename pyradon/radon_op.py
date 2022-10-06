@@ -1,62 +1,63 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import numpy as np
+from radoncfun import *
 
-def radon(inpt,Param,operator):
-#Forward and Adjoint operators for Radon RT in the time domain.
-#  IN   	in:   		intput data 
-#       	Param:  		parameters combination
-#		Param.h:		offset
-#		Param.v:		velocity
-#		Param.nt:		number of samples
-#		Param.dt:		time interval
-#		Param.type:    1: linear 2: parablic 3: hyperbolic
-#
-#	   	operator: 
-## 			operator =  1 means impute is m(tau,v) and output is d(t,x) FORWARD  OP
-##			operator = -1 means input is d(t,x) and output is m(tau,v)  ADJOINT  OP 
-#      
-#  OUT   out:  		output data
-# 
-#  Copyright (C) 2014 The University of Texas at Austin
-#  Copyright (C) 2014 Yangkang Chen
-#
-#  Example:
-#  test/test_radon_recon_hyper.m
-#  test/test_radon_recon_linear.m
-#  test/test_radon_demul.m
-#  
-#  Dot test example:
-#  nt=500;
-#  nv=100;
-#  nh=100;
-#  h=1:nh;
-#  dt=1;
-#  type=1;
-#  
-#  Param.h=h;
-#  Param.nt=nt;
-#  Param.dt=dt;
-#  Param.v=linspace(-5,10,nv);
-#  Param.type=type;
-# 
-#  forward
-#  m1 = randn(nt,nv); 
-#  [d1 ] = radon_op(m1,Param,1);
-#  adjoint
-#  d2 = randn(nt,nh); 
-#  [m2 ] = radon_op(d2,Param,-1);
-# 
-# REFERENCE
-# Chen, 2018, GEO, Automatic velocity analysis using high-resolution hyperbolic Radon transform
+def radon(inpt,par,operator):
+    '''
+    Forward and Adjoint operators for Radon RT in the time domain.
+    IN   	in:   		intput data 
+      	Param:  		parameters combination
+    par.h:		offset
+    par.v:		velocity
+    par.nt:		number of samples
+    par.dt:		time interval
+    par.typ:    1: linear 2: parablic 3: hyperbolic
 
+   	operator: 
+# 			operator =  1 means impute is m(tau,v) and output is d(t,x) FORWARD  OP
+#			operator = -1 means input is d(t,x) and output is m(tau,v)  ADJOINT  OP 
+     
+ OUT   out:  		output data
 
+ Copyright (C) 2014 The University of Texas at Austin
+ Copyright (C) 2014 Yangkang Chen
 
-    h = Param.h
-    v = Param.v
-    nt = Param.nt
-    dt = Param.dt
-    typ = Param.typ
+ Example:
+ test/test_radon_recon_hyper.m
+ test/test_radon_recon_linear.m
+ test/test_radon_demul.m
+ 
+ Dot test example:
+ nt=500;
+ nv=100;
+ nh=100;
+ h=1:nh;
+ dt=1;
+ type=1;
+ 
+ par.h=h;
+ par.nt=nt;
+ par.dt=dt;
+ par.v=linspace(-5,10,nv);
+ par.typ=type;
+
+ forward
+ m1 = randn(nt,nv); 
+ [d1 ] = radon_op(m1,Param,1);
+ adjoint
+ d2 = randn(nt,nh); 
+ [m2 ] = radon_op(d2,Param,-1);
+
+REFERENCE
+Chen, 2018, GEO, Automatic velocity analysis using high-resolution hyperbolic Radon transform
+    '''
+    
+    h = par['h'];
+    v = par['v'];
+    nt = par['nt'];
+    dt = par['dt'];
+    typ = par['typ'];
     
     nh = len(h)
     nv = len(v)
@@ -104,3 +105,32 @@ def radon(inpt,Param,operator):
 
     return out
 
+
+def radonc(din,par,operator):
+	'''
+	Forward and Adjoint operators for Radon RT in the time domain.
+	radon implemented in C
+	'''
+	
+	h = par['h'];
+	v = par['v'];
+	nt = par['nt'];
+	dt = par['dt'];
+	typ = par['typ'];
+
+	nh = len(h);
+	nv = len(v);
+	
+	din=np.float32(din.flatten(order='F'));
+	v=np.float32(v);
+	h=np.float32(h);
+	
+	dout=radonc_fb(din, v, h, typ, nt, nv, nh, dt, operator, 0);
+	
+	if operator==1: #forward
+		dout=dout.reshape(nt,nh,order='F');
+	if operator==-1: #backward/adjoint
+		dout=dout.reshape(nt,nv,order='F');
+	
+	
+	return dout

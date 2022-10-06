@@ -25,15 +25,8 @@ dt = 0.1
 nt = len(t)
 #m = np.zeros((nt,nq))
 
-Param = {}
+Param = {'h':h,'v':1./q,'q':q,'nt':nt,'dt':dt,'typ':1};
 
-class Param:
-    h=h
-    v=1./q
-    q=q
-    nt=nt
-    dt=dt
-    typ=1
 ma=np.zeros((nt,nq))
 
 nx = len(d)

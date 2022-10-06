@@ -18,6 +18,11 @@ def read(*names, **kwargs):
         os.path.join(os.path.dirname(__file__), *names),
         encoding=kwargs.get("encoding", "utf8")).read()
 
+from distutils.core import Extension
+
+eikonalc_module = Extension('radoncfun', sources=['pyradon/src/radon.c'])
+
+from numpy.distutils.core import setup 
 setup(
     name="pyradon",
     version="0.0.1",
@@ -27,6 +32,7 @@ setup(
     author="pyradon developing team",
     author_email="quanzhang1997@gmail.com",
     url="https://github.com/QuanZhang97/pyradon",
+    ext_modules=[eikonalc_module],
     packages=['pyradon'],
     include_package_data=True,
     zip_safe=False,
