@@ -143,7 +143,7 @@ void radon_init(int Nt, int Nh, int Nv, float Dt, float *V, float *H, int typ)
 	if(type==2)
 	{
 		for(int i=0;i<nh;i++)
-			if(hmax<h[i]) hmax=h[i];
+			if(hmax<fabs(h[i])) hmax=h[i];
 	}
 }
 
