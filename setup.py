@@ -25,7 +25,7 @@ radonc_module = Extension('radoncfun', sources=['pyradon/src/radon.c'])
 from numpy.distutils.core import setup 
 setup(
     name="pyradon",
-    version="0.0.1",
+    version="0.0.2",
     license='GNU General Public License, Version 3 (GPLv3)',
     description="A python package of Radon transform for denoising and interpolation of multi-channel seismic data",
     long_description=long_description,
