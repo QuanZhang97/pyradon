@@ -20,7 +20,7 @@ def read(*names, **kwargs):
 
 from distutils.core import Extension
 
-radonc_module = Extension('radoncfun', sources=['pyradon/src/radon.c'])
+radonc_module = Extension('radoncfun', sources=['pyradon/src/radon.c','pyradon/src/adjnull.c'])
 
 from numpy.distutils.core import setup 
 setup(
