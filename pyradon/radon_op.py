@@ -53,11 +53,11 @@ REFERENCE
 Chen, 2018, GEO, Automatic velocity analysis using high-resolution hyperbolic Radon transform
     '''
     
-    h = par['h'];
-    v = par['v'];
-    nt = par['nt'];
-    dt = par['dt'];
-    typ = par['typ'];
+    h = par.h;
+    v = par.v;
+    nt = par.nt;
+    dt = par.dt;
+    typ = par.typ;
     
     nh = len(h)
     nv = len(v)
@@ -112,11 +112,11 @@ def radonc(din,par,operator):
 	radon implemented in C
 	'''
 	
-	h = par['h'];
-	v = par['v'];
-	nt = par['nt'];
-	dt = par['dt'];
-	typ = par['typ'];
+	h = par.h;
+	v = par.v;
+	nt = par.nt;
+	dt = par.dt;
+	typ = par.typ;
 
 	nh = len(h);
 	nv = len(v);

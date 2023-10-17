@@ -34,11 +34,11 @@ def radon_l2c(par,d,m0,niter=10,verb=0):
 	Written on Oct, 5, 2022
 	'''
 	
-	h = par['h'];
-	v = par['v'];
-	nt = par['nt'];
-	dt = par['dt'];
-	typ = par['typ'];
+	h = par.h;
+	v = par.v;
+	nt = par.nt;
+	dt = par.dt;
+	typ = par.typ;
 
 	nh = len(h);
 	nv = len(v);
@@ -62,11 +62,11 @@ def radon_l1c(par,d,m0,niter_in=10,niter_out=3,verb=0):
 	Written on Oct, 5, 2022
 	'''
 	
-	h = par['h'];
-	v = par['v'];
-	nt = par['nt'];
-	dt = par['dt'];
-	typ = par['typ'];
+	h = par.h;
+	v = par.v;
+	nt = par.nt;
+	dt = par.dt;
+	typ = par.typ;
 
 	nh = len(h);
 	nv = len(v);
